@@ -1,52 +1,43 @@
 'use strict';
 
-console.log('App is running');
-
-var template = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h2',
-        null,
-        'This is a Indecision!'
-    ),
-    React.createElement(
-        'p',
-        null,
-        'This is a paragraph'
-    )
-);
-
-var information = {
-    title: 'title there!',
-    template: template
+var square = function square(x) {
+    return x * x;
 };
 
-function isTemplateThere(checkExisting) {
+var squareArrow = function squareArrow(x) {
+    return x * x;
+};
 
-    if (checkExisting) {
-        return checkExisting;
-    } else {
-        return undefined;
+var squareArrowShortened = function squareArrowShortened(x) {
+    return x * x;
+};
+
+console.log(square(4));
+console.log(squareArrow(8));
+console.log(squareArrowShortened(12));
+
+// challenge
+
+var fullName = 'Luiz Cavalieri';
+
+var getFirstName = function getFirstName(name) {
+    return name.split(' ')[0];
+};
+
+console.log('First name: ' + getFirstName(fullName));
+console.log('Full name: ' + fullName);
+
+// Es6 arrow functions 'this' is not bound anymore
+
+var person = {
+    name: 'Luiz',
+    cities: ['Sao Paulo', 'Sydney', 'Seoul'],
+    getPlacesLived: function getPlacesLived() {
+        var _this = this;
+
+        return this.cities.map(function (city) {
+            return _this.name + ' has lived in ' + city + '!';
+        });
     }
-}
-
-var secondTemplate = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        'This is a h1 tag'
-    ),
-    React.createElement(
-        'p',
-        null,
-        information.title
-    ),
-    information.template ? isTemplateThere(information.template) : 'No template'
-);
-
-var appRoot = document.getElementById('app');
-
-ReactDOM.render(secondTemplate, appRoot);
+};
+console.log(person.getPlacesLived());
