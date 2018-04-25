@@ -176,5 +176,4 @@ const User = (props) => {
 };
 
 
-
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
