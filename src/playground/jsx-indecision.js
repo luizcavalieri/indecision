@@ -26,6 +26,8 @@ const resetArray = () => {
     renderVariablesChanges();
 };
 
+
+
 const onMakeDecision = () =>{
     const randomNum = Math.floor(Math.random() * app.options.length);
     const option = app.options[randomNum];
