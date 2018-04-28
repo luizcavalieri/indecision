@@ -8,8 +8,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// stateless functional component
-
+/* STATEFUL FUNCTIONAL REACT COMPONENTS */
 var IndecisionApp = function (_React$Component) {
     _inherits(IndecisionApp, _React$Component);
 
@@ -19,24 +18,35 @@ var IndecisionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
+        _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
         _this.handlePickOption = _this.handlePickOption.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
 
         _this.state = {
             title: 'Indecision App',
             subtitle: 'Put your life in the hands of a computer;',
-            options: [] //['Thing one', 'Thing two', 'Thing three']
+            options: props.options //['Thing one', 'Thing two', 'Thing three']
         };
         return _this;
     }
 
     _createClass(IndecisionApp, [{
+        key: 'handleDeleteOption',
+        value: function handleDeleteOption(optionToRemove) {
+            this.setState(function (prevState) {
+                return {
+                    options: prevState.options.filter(function (option) {
+                        return optionToRemove !== option;
+                    })
+                };
+            });
+        }
+    }, {
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
+            // this is a shorthand option for function returning object
             this.setState(function () {
-                return {
-                    options: []
-                };
+                return { options: [] };
             });
         }
     }, {
@@ -70,10 +80,7 @@ var IndecisionApp = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, {
-                    title: title,
-                    subtitle: subtitle
-                }),
+                React.createElement(Header, null),
                 React.createElement(User, {
                     name: "Luiz",
                     age: "32"
@@ -84,7 +91,8 @@ var IndecisionApp = function (_React$Component) {
                 }),
                 React.createElement(Options, {
                     options: this.state.options,
-                    handleDeleteOptions: this.handleDeleteOptions
+                    handleDeleteOptions: this.handleDeleteOptions,
+                    handleDeleteOption: this.handleDeleteOption
                 }),
                 React.createElement(AddOptions, {
                     handleAddOption: this.handleAddOption
@@ -95,6 +103,10 @@ var IndecisionApp = function (_React$Component) {
 
     return IndecisionApp;
 }(React.Component);
+
+IndecisionApp.defaultProps = {
+    options: []
+};
 
 var AddOptions = function (_React$Component2) {
     _inherits(AddOptions, _React$Component2);
@@ -125,6 +137,7 @@ var AddOptions = function (_React$Component2) {
             });
 
             event.target.elements.option.value = '';
+            event.target.elements.option.focus();
         }
     }, {
         key: 'render',
@@ -174,6 +187,11 @@ var Header = function Header(props) {
     );
 };
 
+Header.defaultProps = {
+    title: 'Indecision App Default',
+    subtitle: 'Put your life in the hands of a computer;'
+};
+
 var Action = function Action(props) {
     return React.createElement(
         'div',
@@ -207,7 +225,11 @@ var Options = function Options(props) {
             'ol',
             null,
             props.options.map(function (option) {
-                return React.createElement(Option, { key: option, optionText: option });
+                return React.createElement(Option, {
+                    key: option,
+                    optionText: option,
+                    handleDeleteOption: props.handleDeleteOption
+                });
             })
         )
     );
@@ -217,7 +239,16 @@ var Option = function Option(props) {
     return React.createElement(
         'li',
         null,
-        props.optionText
+        props.optionText,
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    props.handleDeleteOption(props.optionText);
+                }
+            },
+            'Remove'
+        )
     );
 };
 

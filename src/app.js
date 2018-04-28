@@ -1,26 +1,29 @@
-// stateless functional component
-
+/* STATEFUL FUNCTIONAL REACT COMPONENTS */
 class IndecisionApp extends React.Component{
 
     constructor(props){
         super(props);
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.handlePickOption = this.handlePickOption.bind(this);
         this.handleAddOption = this.handleAddOption.bind(this);
 
         this.state = {
             title: 'Indecision App',
             subtitle: 'Put your life in the hands of a computer;',
-            options:  [] //['Thing one', 'Thing two', 'Thing three']
+            options:  props.options //['Thing one', 'Thing two', 'Thing three']
         };
     }
 
+    handleDeleteOption(optionToRemove) {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
+    }
+
     handleDeleteOptions() {
-        this.setState(() => {
-           return {
-               options: []
-           }
-        });
+        // this is a shorthand option for function returning object
+        this.setState(() => ({ options: [] }));
     }
 
     handlePickOption() {
@@ -51,8 +54,8 @@ class IndecisionApp extends React.Component{
         return (
             <div>
                 <Header
-                    title={title}
-                    subtitle={subtitle}
+
+
                 />
 
                 <User
@@ -68,6 +71,7 @@ class IndecisionApp extends React.Component{
                 <Options
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
+                    handleDeleteOption={this.handleDeleteOption}
                 />
 
                 <AddOptions
@@ -78,6 +82,11 @@ class IndecisionApp extends React.Component{
         );
     }
 }
+
+
+IndecisionApp.defaultProps = {
+    options: []
+};
 
 
 class AddOptions extends React.Component{
@@ -101,6 +110,7 @@ class AddOptions extends React.Component{
         });
 
         event.target.elements.option.value = '';
+        event.target.elements.option.focus();
     }
 
 
@@ -129,6 +139,12 @@ const Header = (props) => {
 };
 
 
+Header.defaultProps = {
+    title: 'Indecision App Default',
+    subtitle: 'Put your life in the hands of a computer;',
+};
+
+
 const Action = (props) => {
     return (
         <div>
@@ -149,7 +165,13 @@ const Options = (props) => {
               <p>total options: {props.options.length}</p>
               <ol>
                   {
-                      props.options.map((option) => <Option key={option} optionText={option} />)
+                      props.options.map((option) => (
+                          <Option
+                              key={option}
+                              optionText={option}
+                              handleDeleteOption={props.handleDeleteOption}
+                          />
+                      ))
                   }
               </ol>
           </div>
@@ -161,6 +183,13 @@ const Option = (props) => {
     return (
         <li>
             {props.optionText}
+            <button
+                onClick={(e) => {
+                    props.handleDeleteOption(props.optionText);
+                }}
+            >
+                Remove
+            </button>
         </li>
     );
 };
