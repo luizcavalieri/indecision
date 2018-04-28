@@ -46,7 +46,6 @@ class IndecisionApp extends React.Component{
         });
     }
 
-
     render(){
         const title = 'Indecision',
               subtitle = 'Put your life in the hands of a computer.';
@@ -82,7 +81,6 @@ class IndecisionApp extends React.Component{
         );
     }
 }
-
 
 IndecisionApp.defaultProps = {
     options: []
@@ -137,7 +135,6 @@ const Header = (props) => {
         </div>
     );
 };
-
 
 Header.defaultProps = {
     title: 'Indecision App Default',
