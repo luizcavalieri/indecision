@@ -15,6 +15,27 @@ class IndecisionApp extends React.Component{
         };
     }
 
+    componentDidMount(){
+       try{
+           const json = localStorage.getItem('optionsIA');
+           const options = JSON.parse(json);
+           options && this.setState(() => ({ options }));
+       }catch (e) {
+           console.log('Error: '+e);
+       }
+
+    }
+
+    componentDidUpdate(provProps, prevState){
+        if (prevState.options.length !== this.state.options.length) {
+            const jsonOption = JSON.stringify(this.state.options);
+            localStorage.setItem('optionsIA', jsonOption);
+        }
+    }
+    componentWillUnmount(){
+        // console.log('componentDidMountt');
+    }
+
     handleDeleteOption(optionToRemove) {
         this.setState((prevState) => ({
             options: prevState.options.filter((option) => optionToRemove !== option)
@@ -53,8 +74,7 @@ class IndecisionApp extends React.Component{
         return (
             <div>
                 <Header
-
-
+                    title={'Indecion App v1.2'}
                 />
 
                 <User
@@ -107,7 +127,7 @@ class AddOptions extends React.Component{
             return { error } // this is the same as "return { error: error }"
         });
 
-        event.target.elements.option.value = '';
+        if(!error) event.target.elements.option.value = '';
         event.target.elements.option.focus();
     }
 
@@ -160,6 +180,7 @@ const Options = (props) => {
           <div>
               <button onClick={props.handleDeleteOptions}>Remove All</button>
               <p>total options: {props.options.length}</p>
+              {props.options.length === 0 && <p>Please add an option to start.</p>}
               <ol>
                   {
                       props.options.map((option) => (
@@ -183,8 +204,7 @@ const Option = (props) => {
             <button
                 onClick={(e) => {
                     props.handleDeleteOption(props.optionText);
-                }}
-            >
+                }} >
                 Remove
             </button>
         </li>

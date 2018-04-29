@@ -31,6 +31,32 @@ var IndecisionApp = function (_React$Component) {
     }
 
     _createClass(IndecisionApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+                var json = localStorage.getItem('optionsIA');
+                var options = JSON.parse(json);
+                options && this.setState(function () {
+                    return { options: options };
+                });
+            } catch (e) {
+                console.log('Error: ' + e);
+            }
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(provProps, prevState) {
+            if (prevState.options.length !== this.state.options.length) {
+                var jsonOption = JSON.stringify(this.state.options);
+                localStorage.setItem('optionsIA', jsonOption);
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            // console.log('componentDidMountt');
+        }
+    }, {
         key: 'handleDeleteOption',
         value: function handleDeleteOption(optionToRemove) {
             this.setState(function (prevState) {
@@ -80,7 +106,9 @@ var IndecisionApp = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, null),
+                React.createElement(Header, {
+                    title: 'Indecion App v1.2'
+                }),
                 React.createElement(User, {
                     name: "Luiz",
                     age: "32"
@@ -136,7 +164,7 @@ var AddOptions = function (_React$Component2) {
                 };
             });
 
-            event.target.elements.option.value = '';
+            if (!error) event.target.elements.option.value = '';
             event.target.elements.option.focus();
         }
     }, {
@@ -221,6 +249,11 @@ var Options = function Options(props) {
             'total options: ',
             props.options.length
         ),
+        props.options.length === 0 && React.createElement(
+            'p',
+            null,
+            'Please add an option to start.'
+        ),
         React.createElement(
             'ol',
             null,
@@ -245,8 +278,7 @@ var Option = function Option(props) {
             {
                 onClick: function onClick(e) {
                     props.handleDeleteOption(props.optionText);
-                }
-            },
+                } },
             'Remove'
         )
     );
