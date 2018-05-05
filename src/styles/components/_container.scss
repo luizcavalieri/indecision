@@ -1,0 +1,15 @@
+.container {
+  max-width: 60rem;
+  padding: {
+    left: $m-size;
+    right: $m-size;
+    top: 0;
+    bottom: 0;
+  };
+  margin:{
+    left: auto;
+    right: auto;
+    top: 0;
+    bottom: 0;
+  }
+}

@@ -1,0 +1,39 @@
+.action{
+
+  &__btn{
+    background: $purple;
+    border: none;
+    border-bottom: .6rem solid darken($purple, 10%);
+    color: white;
+    font-size: $large-size;
+    font-weight: bold;
+    padding: {
+      left: $xlarge-size;
+      right: $xlarge-size;
+      top: $m-size;
+      bottom: $m-size;
+    };
+    width: 100%;
+
+    &:disabled{
+      opacity: 0.5;
+    }
+  }
+}
+
+.button{
+  background: $purple;
+  border: none;
+  border-bottom: .3rem solid ($purple, 10%);
+  color: white;
+  font-weight: 500;
+  padding: $s-size;
+
+}
+
+.button--link{
+  background: none;
+  border: none;
+  color: $off-white;
+  padding: 0;
+}
