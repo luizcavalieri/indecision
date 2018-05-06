@@ -1,0 +1,20 @@
+.option{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: $m-size;
+  margin: 0;
+  border:{
+    bottom: 1px solid lighten($light-blue, 20%);
+    top: 1px solid lighten($light-blue, 20%);
+  };
+
+  &__text{
+    color: white;
+    font: {
+      weight: 500;
+      size: 2rem;};
+    word-break: break-all;
+    margin-right: 1.5rem;
+  }
+}

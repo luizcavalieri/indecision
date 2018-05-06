@@ -1,0 +1,33 @@
+.add{
+
+  &-option{
+    display: flex;
+    padding: $m-size;
+
+
+    &__error{
+      color: $off-white;
+      font:{
+        style: italic;
+      }
+      margin: $m-size 0 0 0;
+      padding: 0 $m-size;
+
+    }
+
+    &__input{
+      background: $dark-blue;
+      border: {
+        top: 0;
+        bottom: .3rem solid darken($dark-blue, 10%);
+        right: 0;
+        left: 0;
+      };
+      color: $off-white;
+      flex-grow: 1;
+      margin-right: $m-size;
+      padding: $s-size;
+
+    }
+  }
+}

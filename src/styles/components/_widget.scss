@@ -1,0 +1,45 @@
+//Widget
+
+
+
+// Widget header
+.widget{
+  background: $light-blue;
+  margin-bottom: $xlarge-size;
+  margin-top: $xlarge-size;
+
+  &-header{
+    background: $blue;
+    color: $off-white;
+    padding: $m-size;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__title{
+      margin: 0;
+    }
+  }
+
+
+  &-body{
+    &__counter{
+      color: $off-white;
+      margin: 0;
+      padding: $s-size;
+      text-align: right;
+    }
+
+    &__message{
+      color: $off-white;
+      margin: 0;
+      padding: $large-size;
+      text-align: center;
+      border:{
+        bottom: 1px solid lighten($light-blue, 20%);
+      }
+    }
+  }
+}
+
